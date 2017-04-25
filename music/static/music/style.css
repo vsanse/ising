@@ -1,0 +1,9 @@
+body{
+background-image:url("images/pattern3.png");
+}
+.navbar{
+  border-radius:0
+}
+.navbar-brand{
+  font-family: 'Yellowtail' ,cursive;
+}
