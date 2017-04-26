@@ -1,23 +1,21 @@
 from django import forms
 from django.contrib.auth.models import User
-#
-from .models import Songs,Profile
-#
-#
 
-#
-#
-class SongForm(forms.ModelForm):
+from .models import Profile, Song
 
-    class Meta:
-        model = Songs
-        fields = ['artist','title','file']
 
 class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ['name','dob','genre','photo','hometown']
+        fields = ['name', 'hometown','photo']
+
+
+class SongForm(forms.ModelForm):
+
+    class Meta:
+        model = Song
+        fields = ['song_title', 'audio_file','genre']
 
 
 class UserForm(forms.ModelForm):

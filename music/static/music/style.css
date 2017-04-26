@@ -1,9 +1,28 @@
-body{
-background-image:url("images/pattern3.png");
+body {
+    background: white url("images/background.png");
 }
-.navbar{
-  border-radius:0
+
+ul.errorlist {
+    padding-left: 0;
 }
-.navbar-brand{
-  font-family: 'Yellowtail' ,cursive;
+
+ul.errorlist > li {
+    list-style: none;
+}
+
+.navbar {
+    border-radius: 0;
+}
+
+.navbar-brand {
+    font-family: 'Satisfy', cursive;
+}
+
+.glyphicon-star {
+    color: #CCCCCC;
+    font-size: 16px;
+}
+
+.glyphicon-star.active {
+    color: #FDB230;
 }
