@@ -7,25 +7,30 @@
     <!-- Albums -->
     <div class="row">
         <div class="col-sm-12">
-            <h3>{{ user.username }}'s Profile</h3>
+            <h3>My Profile</h3>
         </div>
         {% if profile %}
             {% for pro in profile %}
-                <div class="col-sm-4 col-lg-2">
+                <div class="col-sm-4 col-lg-3">
                     <div class="thumbnail">
                         <a href="{% url 'music:detail' pro.id %}">
                             <img src="{{ pro.photo.url }}" class="img-responsive">
                         </a>
-                        <div class="caption">
-                            <h4>{{ pro.name }}</h4>
-
+                        <div class="caption" style="text-align:center">
                             <!-- View Details -->
-                            <a href="{% url 'music:detail' pro.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
-
-
+                            <a href="{% url 'music:detail' pro.id %}" class="btn btn-primary btn-sm" role="button">My Songs</a>
                         </div>
                     </div>
                 </div>
+              <div class="col-sm-8 col-md-9">
+                 <div class="panel panel-default">
+                    <div class="panel-body" style="text-align:center">
+                       <h1>{{ pro.name }}</h1>
+                        <i><small>from</small></i>
+                       <h3>{{pro.hometown}}</h3>
+                     </div>
+                  </div>
+               </div>
                 {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
             {% endfor %}
         {% else %}
@@ -33,7 +38,7 @@
                 <br>
                 <a href="{% url 'music:create_profile' %}">
                     <button type="button" class="btn btn-success">
-                        <span class="glyphicon glyphicon-plus"></span>&nbsp; Add an Album
+                        <span class="glyphicon glyphicon-plus"></span>&nbsp; Create Profile
                     </button>
                 </a>
             </div>
@@ -41,49 +46,7 @@
     </div>
 
     <!-- If user searches and there are songs -->
-    {% if songs %}
-        <div class="row">
-            <div class="col-sm-12">
-                <h3>Songs</h3>
-            </div>
-            <div class="col-sm-12">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Song Title</th>
-                                    <th>Artist</th>
-                                    <th>Audio File</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for song in songs %}
-                                    <tr>
-                                        <td>{{ song.song_title }}</td>
-                                        <td>{{ song.profile.name }}</td>
-                                        <td>
-                                            <a target="_blank" href="{{ song.audio_file.url }}">
-                                                <button type="button" class="btn btn-success btn-xs">
-                                                    <span class="glyphicon glyphicon-play"></span>&nbsp; Play
-                                                </button>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="{% url 'music:detail' song.profile.id %}">
-                                                <img src="{{ song.profile.photo.url }}" class="img-responsive" style="width: 20px; float: left; margin-right: 10px;" />
-                                            </a>
-                                            <a href="{% url 'music:detail' song.profile.id %}">{{ song.profile.name }}</a>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endif %}
+
 
 </div>
 {% endblock %}

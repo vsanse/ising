@@ -88,6 +88,15 @@ def detail(request, profile_id):
         profile = get_object_or_404(Profile, pk=profile_id)
         return render(request, 'music/detail.html', {'profile': profile, 'user': user})
 
+
+def search_bio(request,profile_id):
+    if not request.user.is_authenticated():
+        return render(request, 'music/login.html')
+    else:
+        user = request.user
+        profile = get_object_or_404(Profile, pk=profile_id)
+        return render(request, 'music/search_bio.html', {'profile': profile, 'user': user})
+
 def index(request):
     if not request.user.is_authenticated():
         return render(request, 'music/login.html')
@@ -102,7 +111,7 @@ def index(request):
             song_results = song_results.filter(
                 Q(song_title__icontains=query)
             ).distinct()
-            return render(request, 'music/index.html', {
+            return render(request, 'music/search_song.html', {
                 'profile': profile,
                 'songs': song_results,
             })

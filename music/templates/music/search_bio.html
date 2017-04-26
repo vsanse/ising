@@ -1,0 +1,30 @@
+{% extends 'music/base.html' %}
+{% block profile_active %}active{% endblock %}
+
+{% block body %}
+<div class="albums-container container-fluid">
+    <div class="row">
+
+        <!-- Left Album Info -->
+        <div class="col-sm-4 col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body" style="text-align:center">
+                        {% if profile.photo %}
+                            <img src="{{ profile.photo.url }}" class="img-responsive">
+                        {% else %}
+                            <h3>No image to display</h3>
+                        {% endif %}
+
+               </div>
+            </div>
+        </div>
+        <div class="col-sm-8 col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-body" style="text-align:center">
+                     <h1>{{ profile.name }}</h1>
+                    <h3>{{profile.hometown}}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+ {%endblock%}
