@@ -36,7 +36,7 @@
                                             <a href="{% url 'music:search_bio' song.profile.id %}">
                                                 <img src="{{ song.profile.photo.url }}" class="img-responsive" style="width: 20px; float: left; margin-right: 10px;" />
                                             </a>
-                                            <a href="{% url 'music:detail' song.profile.id %}">{{ song.profile.name }}</a>
+                                            <a href="{% url 'music:search_bio' song.profile.id %}">{{ song.profile.name }}</a>
                                         </td>
                                     </tr>
                                 {% endfor %}

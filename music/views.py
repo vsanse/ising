@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
-from django.http import JsonResponse
+from django.views.generic import UpdateView
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
 from .forms import ProfileForm, SongForm, UserForm
@@ -36,6 +36,13 @@ def create_profile(request):
         return render(request, 'music/create_profile.html', context)
 
 
+class ProfileUpdateView(UpdateView):
+    model = Profile
+    template_name = 'music/create_profile.html'
+    form_class = ProfileForm
+    success_url = '/'
+
+
 def create_song(request, profile_id):
     form = SongForm(request.POST or None, request.FILES or None)
     profile = get_object_or_404(Profile, pk=profile_id)
@@ -69,8 +76,6 @@ def create_song(request, profile_id):
         'form': form,
     }
     return render(request, 'music/create_song.html', context)
-
-
 
 
 def delete_song(request, profile_id, song_id):
@@ -180,6 +185,26 @@ def songs(request, filter_by):
         except Profile.DoesNotExist:
             users_songs = []
         return render(request, 'music/songs.html', {
+            'song_list': users_songs,
+            'filter_by': filter_by,
+        })
+
+
+def songs_global(request, filter_by):
+    if not request.user.is_authenticated():
+        return render(request, 'music/login.html')
+    else:
+        try:
+            song_ids = []
+            for profile in Profile.objects.all():
+                for song in profile.song_set.all():
+                    song_ids.append(song.pk)
+            users_songs = Song.objects.filter(pk__in=song_ids)
+            if filter_by == 'favorites':
+                users_songs = users_songs.filter(is_favorite=True)
+        except Profile.DoesNotExist:
+            users_songs = []
+        return render(request, 'music/song_global.html', {
             'song_list': users_songs,
             'filter_by': filter_by,
         })
