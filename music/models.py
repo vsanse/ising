@@ -21,7 +21,7 @@ class Song(models.Model):
         return self.song_title
 
 class LikeDetail(models.Model):
-    profile_id = models.PositiveIntegerField()
+    profile_id_id = models.PositiveIntegerField()
     song_id = models.PositiveIntegerField()
     def __int__(self):
         return self.song_id
