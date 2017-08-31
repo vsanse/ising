@@ -5,10 +5,11 @@ import dj_database_url
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'rha7*we-io_dbhnf$k)%wum_i=-fct9+n^j+@5j9p*$z01lzj1'
+#SECRET_KEY = 'rha7*we-io_dbhnf$k)%wum_i=-fct9+n^j+@5j9p*$z01lzj1'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = congig('DEBUG', default=false, cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -56,9 +57,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'website.wsgi.application'
 
 # Database
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'] = dj_database_url.config()
-DATABASES['default'].update(db_from_env)
+DATABASES = {
+    'default': dj_database_url.config(default=config('DATABASE_URL'))
+}
+#db_from_env = dj_database_url.config(conn_max_age=500)
+#DATABASES['default'] = dj_database_url.config()
+#DATABASES['default'].update(db_from_env)
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
