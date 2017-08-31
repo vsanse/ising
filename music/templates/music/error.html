@@ -1,0 +1,13 @@
+{% extends 'music/base.html' %}
+{% block body %}
+{%load staticfiles%}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 col-sm-12" style="text-align:center">
+            <p style="text-align:center;font-size: 1000%;">404</p>
+            <p><b> OOPS! PAGE NOT FOUND</b></p>
+            <a href="{% url 'music:index' %}"><b> GO BACK!</b></a>
+        </div>
+    </div>
+</div>
+{%endblock%}

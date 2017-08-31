@@ -23,21 +23,31 @@
                         <thead>
                             <tr>
                                 <th>Song Title</th>
-                                <th>Artist</th>
                                 <th>Audio File</th>
+                                <th>Likes</th>
+                                <th>Artist</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for song in song_list %}
                                 <tr>
-                                    <td>{{ song.song_title }}</td>
-                                    <td>{{ song.profile.artist }}</td>
+                                    <td>{{ song.song_title }}
+                                    </td>
                                     <td>
                                         <a target="_blank" href="{{ song.audio_file.url }}">
                                             <button type="button" class="btn btn-success btn-xs">
                                                 <span class="glyphicon glyphicon-play"></span>&nbsp; Play
                                             </button>
                                         </a>
+                                    </td>
+                                    <td>
+                                      <form action="{% url 'music:like_song' 'all' song.id %}" method="post" style="display: inline;">
+                                          {% csrf_token %}
+                                          <input type="hidden" name="song_id" value="{{ song.id }}" />
+                                          <button type="submit" class="btn btn-primary btn-xs">
+                                            <span class="glyphicon glyphicon-thumbs-up"></span>&nbsp; {{ song.likes }} Likes
+                                          </button>
+                                        </form>
                                     </td>
                                     <td>
                                         <a href="{% url 'music:search_bio' song.profile.id %}">

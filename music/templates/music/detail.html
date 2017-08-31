@@ -45,6 +45,7 @@
                         <tr>
                             <th>Title</th>
                             <th>Audio File</th>
+                            <th>Likes</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
@@ -58,6 +59,11 @@
                                             <span class="glyphicon glyphicon-play"></span>&nbsp; Play
                                         </button>
                                     </a>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-xs">
+                                      <span class="glyphicon glyphicon-thumbs-up"></span>&nbsp; {{ song.likes }} Likes
+                                    </button>
                                 </td>
                                 <td>
                                     <form action="{% url 'music:delete_song' profile.id song.id %}" method="post" style="display: inline;">
