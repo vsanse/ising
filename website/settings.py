@@ -57,7 +57,7 @@ WSGI_APPLICATION = 'website.wsgi.application'
 
 # Database
 DATABASES = {
-    'default' : dj_database_url.config(
+    'default' = dj_database_url.config(
     default=config('DATABASE_URL')
     )
 }
