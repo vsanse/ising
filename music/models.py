@@ -5,7 +5,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 class Profile(models.Model):
     user = models.ForeignKey(User, default=1)
     name = models.CharField(max_length=250)
-    hometown=models.CharField(max_length=500)
+    hometown = models.CharField(max_length=500)
     photo = models.FileField()
     def __str__(self):
         return self.name
@@ -21,7 +21,7 @@ class Song(models.Model):
         return self.song_title
 
 class LikeDetail(models.Model):
-    profile_id_id = models.PositiveIntegerField()
+    profile_id = models.PositiveIntegerField()
     song_id = models.PositiveIntegerField()
     def __int__(self):
         return self.song_id
