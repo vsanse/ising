@@ -171,11 +171,6 @@ def login_user(request):
 def register(request):
     form = UserForm(request.POST or None)
     if form.is_valid():
-        email = form.cleaned_data['email']
-        if User.objects.filter(email = email).first():
-            return HttpResponse("A user with that email already exists..")
-        new_instance = form.save(commit=True)
-        new_instance.save()
         user = form.save(commit=False)
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
