@@ -171,21 +171,29 @@ def login_user(request):
 
 def register(request):
     form = UserForm(request.POST or None)
-    if form.is_valid():
-        user = form.save(commit=False)
-        username = form.cleaned_data['username']
-        password = form.cleaned_data['password']
-        user.set_password(password)
-        user.save()
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                profile= Profile.objects.filter(user=request.user)
-                return render(request, 'music/index.html', {'profile': profile})
-    context = {
-        "form": form,
-    }
+    try:
+        if form.is_valid():
+            user = form.save(commit=False)
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user.set_password(password)
+            user.save()
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    profile= Profile.objects.filter(user=request.user)
+                    return render(request, 'music/index.html', {'profile': profile})
+        context = {
+            "form": form,
+        }
+    except ExpectedError as e:
+        error_message = 'User with this Email address already exists.'
+        context = {
+            "form": form,
+            "error_message": error_message,
+        }
+        return render(request, 'music/register.html', context)
     return render(request, 'music/register.html', context)
 
 
