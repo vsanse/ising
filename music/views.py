@@ -6,6 +6,7 @@ from django.db.models import Q
 from .forms import ProfileForm, SongForm, UserForm
 from .models import Profile, Song, LikeDetail
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 
 AUDIO_FILE_TYPES = ['wav', 'mp3', 'ogg']
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
@@ -85,8 +86,6 @@ def create_song(request, profile_id):
             'form': form,
         }
         return render(request, 'music/create_song.html', context)
-        #Song_instance = Song.objects.create(likes=0)
-        #return render(request, 'create_song.html.html')
     else:
         return render(request,'music/error.html')
 
@@ -171,29 +170,25 @@ def login_user(request):
 
 def register(request):
     form = UserForm(request.POST or None)
-    try:
-        if form.is_valid():
-            user = form.save(commit=False)
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user.set_password(password)
-            user.save()
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    profile= Profile.objects.filter(user=request.user)
-                    return render(request, 'music/index.html', {'profile': profile})
+    if form.is_valid():
+        if User.objects.filter(phone_number = ph_number).first():
+            return HttpResponse("A user with that email already exists..")
+        new_instance = form.save(commit=True)
+        new_instance.save()
+        user = form.save(commit=False)
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
+        user.set_password(password)
+        user.save()
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                profile= Profile.objects.filter(user=request.user)
+                return render(request, 'music/index.html', {'profile': profile})
         context = {
             "form": form,
         }
-    except IntegrityError as e:
-        error_message = 'User with this Email address already exists.'
-        context = {
-            "form": form,
-            "error_message": error_message,
-        }
-        return render(request, 'music/register.html', context)
     return render(request, 'music/register.html', context)
 
 
