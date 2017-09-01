@@ -6,7 +6,6 @@ from django.db.models import Q
 from .forms import ProfileForm, SongForm, UserForm
 from .models import Profile, Song, LikeDetail
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
 
 AUDIO_FILE_TYPES = ['wav', 'mp3', 'ogg']
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
