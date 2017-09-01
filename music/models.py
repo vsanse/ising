@@ -2,10 +2,13 @@ from django.contrib.auth.models import Permission, User
 from django.db import models
 from django.contrib.contenttypes.fields import GenericRelation
 
+
+User._meta.get_field('email')._unique = True
+
 class Profile(models.Model):
     user = models.ForeignKey(User, default=1)
     name = models.CharField(max_length=250)
-    hometown = models.CharField(max_length=500)
+    hometown=models.CharField(max_length=500)
     photo = models.FileField()
     def __str__(self):
         return self.name

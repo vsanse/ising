@@ -52,8 +52,6 @@ class ProfileUpdateView(UpdateView):
 def create_song(request, profile_id):
     if not request.user.is_authenticated():
         return render(request, 'music/login.html')
-
-
     if request.user.pk == int(profile_id):
         form = SongForm(request.POST or None, request.FILES or None)
         profile = get_object_or_404(Profile, pk=profile_id)
@@ -223,7 +221,7 @@ def songs_global(request, filter_by):
                 for song in profile.song_set.all():
                     song_ids.append(song.pk)
             users_songs = Song.objects.filter(pk__in=song_ids)
-            like_list = []
+            """like_list = []
             text = 'Like'
             for songid in song_ids:
                 liked_flag = 0
@@ -244,7 +242,7 @@ def songs_global(request, filter_by):
             like_dict = {}
             for i in range(len(users_songs)):
                 like_dict[users_songs[i]] = like_list[i]
-            print(like_dict)
+            print(like_dict)"""
             if filter_by == 'favorites':
                 users_songs = users_songs.filter(is_favorite=True)
         except Profile.DoesNotExist:
@@ -252,7 +250,6 @@ def songs_global(request, filter_by):
         return render(request, 'music/song_global.html', {
             'song_list': users_songs,
             'filter_by': filter_by,
-            'like_dict': like_dict,
         })
 
 def like_song(request, filter_by, song_id):
